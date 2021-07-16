@@ -293,7 +293,7 @@ foreach($iv as &$b) {
 			<li><em>“Vaka - vefat oranı”, “Hasta - vefat oranı”</em> ve <em>“Ağır hasta - vefat oranı”</em> Bakanlıktan alınan veriler işlenerek elde edilmiştir.</li>
 			<li>Sayı niteliğindeki verilere dair referans aralığı tablonun sol bölümünde, oran niteliğindeki verilere dair referans aralığı ise tablonun sağ bölümünde gösterilmiştir.</li>
 			<li><strong>PHP</strong> ve <strong>JS</strong> ile hazırlanan ve veri görselleştirmesi için <strong>Google Charts</strong>’ın kullanıldığı grafik açık kaynak kodlu olup, GitHub üzerinden kaynak kodlarına erişilebilir.</li>
-			<li>Aşılara dair derlenen <strong>JSON</strong> ve <strong>PHP Array</strong> formatındaki verilere grafiğin GitHub sayfasından erişilebilir. Derlenen verilerin güvenilirliği ve devamlılığı konusunda ise grafik çalışmasının bir iddiası yoktur.</li>
+			<li>Aşılara dair derlenen <a href="https://raw.githubusercontent.com/mertskaplan/turkiyede-gunluk-covid-19-grafigi/main/vaccine.json" target="_blank">JSON</a> ve <a href="https://github.com/mertskaplan/turkiyede-gunluk-covid-19-grafigi/blob/main/vaccine.php" target="_blank">PHP Array</a> formatındaki verilere grafiğin GitHub sayfasından erişilebilir. Derlenen verilerin güvenilirliği ve devamlılığı konusunda ise grafik çalışmasının bir iddiası yoktur.</li>
 			<li>Grafikle ilgili olarak soru, öneri ve eleştiri gibi konularda <em class="msk-selectAll">mail@mertskaplan.com</em> adresi ile iletişime geçebilirsiniz.</li>
 		</ol>
 	</div>
