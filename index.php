@@ -298,7 +298,7 @@ foreach($iv as &$b) {
 		</ol>
 	</div>
 	<div class="msk-footer">
-	     <p>İçerik <a rel="license" title="Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> lisansı altındadır.</p>
+	     <p>İçerik <a rel="license" title="Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International" href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a>, kaynak kodları <a title="Massachusetts Institute of Technology License" href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">MIT</a> lisansı altındadır.</p>
 	</div>
 </body>
 </html>
