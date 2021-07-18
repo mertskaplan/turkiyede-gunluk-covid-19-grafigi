@@ -38,7 +38,7 @@ include 'functions.php';
         google.setOnLoadCallback(drawChart);
         function drawChart() {
             var data = google.visualization.arrayToDataTable([
-                ['Tarih',   'Günlük vaka sayısı',  'Günlük hasta sayısı', 'Günlük vefat sayısı', 'Günlük ağır hasta sayısı', 'Toplam aşı sayısı', '1. doz aşı sayısı', '2. doz aşı sayısı', '3. doz aşı sayısı', 'Vaka - vefat oranı', 'Hasta - vefat oranı', 'Ağır hasta - vefat oranı'],
+                ['Tarih',   'Günlük vaka sayısı',  'Günlük hasta sayısı', 'Günlük vefat sayısı', 'Günlük ağır hasta sayısı', 'Toplam aşı sayısı', '1. doz aşı sayısı', '2. doz aşı sayısı', '3. doz aşı sayısı', 'Vaka - vefat oranı', 'Hasta - vefat oranı', 'Ağır hasta - vefat oranı', '1. Doz aşı yaptıranların 18 yaş ve üstü nüfusa oranı', '2. Doz aşı yaptıranların 18 yaş ve üstü nüfusa oranı', '3. Doz aşı yaptıranların 18 yaş ve üstü nüfusa oranı'],
 <?php 
 $json = find('var geneldurumjson = ', ';//]]>', curl('https://covid19.saglik.gov.tr/TR-66935/genel-koronavirus-tablosu.html'));
 $infection = json_decode($json[0], true);
@@ -103,6 +103,10 @@ foreach($iv as &$b) {
     $b['hasta_vefat'] = percent($b['gunluk_hasta'], $b['gunluk_vefat']);                                // 10
     $b['agir_hasta_vefat'] = percent($b['agir_hasta_sayisi'], $b['gunluk_vefat']);                      // 11
 
+    (!empty($b['1_doz_asi'])) ? $b['1_doz_orani'] = percent(83614362 - 22750657, $b['1_doz_asi']) : $b['1_doz_orani'] = null; // 12  // https://data.tuik.gov.tr/Bulten/Index?p=Istatistiklerle-Cocuk-2020-37228
+    (!empty($b['2_doz_asi'])) ? $b['2_doz_orani'] = percent(83614362 - 22750657, $b['2_doz_asi']) : $b['2_doz_orani'] = null; // 13
+    (!empty($b['3_doz_asi'])) ? $b['3_doz_orani'] = percent(83614362 - 22750657, $b['3_doz_asi']) : $b['3_doz_orani'] = null; // 14
+
     $c = array_values($b);
     echo "                ";
     print_r(json_encode($c));
@@ -111,42 +115,55 @@ foreach($iv as &$b) {
 ?>
         ]);
 
-        var options = {
-            title: 'Türkiye\'de günlük Covid-19 aşısı grafiği',
-//            interpolateNulls = true;
-            //colors: ['#19215c', '#e0772f', '#665191', '#824a87', '#d45087', '#f95d6a', '#ff7c43', '#ffa600'],
-            vAxes: {
-                1: {
-                    gridlines: {color: 'transparent'},
-                    format: '#\'%\'',
-                    minValue: 0,
-                    maxValue: 5
-                },
-            },
-            series: {
-                '8':{targetAxisIndex:1},
-            },
-            // http://www.marinamele.com/2014/04/google-charts-double-axes.html
-
-            curveType: 'none',
-            legend: {position: 'bottom'}
-        };
-
         var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
 
-        const graphics = [0,6,7,8];                 // showVaccine
+        const graphics = [0,6,7,8,12,13,14];        // showVaccine
         const graphicsInfection = [0,1,2,4,3,9];    // showInfection
         const graphicsSick = [0,2,4,3,10,11];       // showSick
         const graphicsDeath = [0,3,9,10,11];        // showDeath
 
         view = new google.visualization.DataView(data);
-        view.setColumns(graphics); 
+        view.setColumns(graphics);
+        var options = {
+                title: 'Türkiye\'de günlük Covid-19 aşısı grafiği',
+                vAxes: {
+                    1: {
+                        gridlines: {color: 'transparent'},
+                        format: '#\'%\'',
+                        minValue: 0,
+                        maxValue: 100
+                    },
+                },
+                series: {
+                    '3':{targetAxisIndex:1},
+                    '4':{targetAxisIndex:1},
+                    '5':{targetAxisIndex:1},
+                },
+                legend: {position: 'bottom'}
+            }
         chart.draw(view, options);
 
         var showVaccine = document.getElementById("vaccine");
         showVaccine.onclick = function() {
             view = new google.visualization.DataView(data);
-            view.setColumns(graphics); 
+            view.setColumns(graphics);
+            var options = {
+                title: 'Türkiye\'de günlük Covid-19 aşısı grafiği',
+                vAxes: {
+                    1: {
+                        gridlines: {color: 'transparent'},
+                        format: '#\'%\'',
+                        minValue: 0,
+                        maxValue: 100
+                    },
+                },
+                series: {
+                    '3':{targetAxisIndex:1},
+                    '4':{targetAxisIndex:1},
+                    '5':{targetAxisIndex:1},
+                },
+                legend: {position: 'bottom'}
+            }
             chart.draw(view, options);
         }
         
@@ -290,7 +307,7 @@ foreach($iv as &$b) {
 			<li><strong>Grafik</strong>, Türkiye’ye dair <strong>Sağlık Bakanlığı</strong>nın paylaştığı <strong>Kovid-19</strong> verilerinin tek bir tablo üzerinde görselleştirmesi amacıyla hazırlanmıştır. Ancak aşılama sayılarının milyonlarla, vefat sayılarının ise yüzlerle ifade edilmesi gibi nedenlerle tüm veriler tek tablo üzerinde anlamlı bir sonuç oluşturamadığı için anlamlı okumaların yapılabilmesi için belirli veri setleri gizlenerek dört sekme oluşturulmuştur.</li>
 			<li>Günlük <strong>Kovid-19</strong> vaka, hasta ve vefat sayısı gibi veriler Sağlık Bakanlığının yayımladığı <a href="https://covid19.saglik.gov.tr/TR-66935/genel-koronavirus-tablosu.html" target="_blank">Genel Koronavirüs Tablosu</a>’ndan <strong>anlık ve otomatik</strong> olarak çekilmektedir.</li>
 			<li>Aşılama sayıları ile ilgili olarak Bakanlık tarafından sadece toplam aşı miktarları paylaşıldığı için birinci ve ikinci doz aşılara dair günlük aşılama sayıları Bakanlığın <a href="https://covid19asi.saglik.gov.tr" target="_blank">covid19asi.saglik.gov.tr</a> adresli internet sitesinin <a href="https://web.archive.org/web/*/https://covid19asi.saglik.gov.tr/" target="_blank">The Wayback Machine</a> üzerindeki ilgili güne dair son kaydı esas alınarak, üçüncü doz aşılara dair günlük aşılama sayıları ise yine Bakanlığın <a href="https://covid19.saglik.gov.tr" target="_blank">covid19.saglik.gov.tr</a> adresli internet sitesinin <a href="https://web.archive.org/web/*/https://covid19.saglik.gov.tr/" target="_blank">The Wayback Machine</a> üzerindeki ilgili güne dair son kaydı esas alınarak <strong>derlenmiştir.</strong></li>
-			<li><em>“Vaka - vefat oranı”, “Hasta - vefat oranı”</em> ve <em>“Ağır hasta - vefat oranı”</em> Bakanlıktan alınan veriler işlenerek elde edilmiştir.</li>
+			<li><em>“Vaka - vefat oranı”, “Hasta - vefat oranı”</em>, <em>“Ağır hasta - vefat oranı”</em> ve uygulanan aşı dozu sayısının 18 yaş ve üstü nüfusa oranı, Bakanlıktan ve <a href="https://data.tuik.gov.tr/Bulten/Index?p=Istatistiklerle-Cocuk-2020-37228" target="_blank">TÜİK</a>'ten alınan veriler işlenerek elde edilmiştir.</li>
 			<li>Sayı niteliğindeki verilere dair referans aralığı tablonun sol bölümünde, oran niteliğindeki verilere dair referans aralığı ise tablonun sağ bölümünde gösterilmiştir.</li>
 			<li><strong>PHP</strong> ve <strong>JS</strong> ile hazırlanan ve veri görselleştirmesi için <strong>Google Charts</strong>’ın kullanıldığı grafik açık kaynak kodlu olup, <a href="https://github.com/mertskaplan/turkiyede-gunluk-covid-19-grafigi" target="_blank">GitHub</a> üzerinden kaynak kodlarına erişilebilir.</li>
 			<li>Aşılara dair derlenen <a href="https://raw.githubusercontent.com/mertskaplan/turkiyede-gunluk-covid-19-grafigi/main/vaccine.json" target="_blank">JSON</a>, <a href="https://github.com/mertskaplan/turkiyede-gunluk-covid-19-grafigi/blob/main/vaccine.php" target="_blank">PHP Array</a> ve <a href="https://github.com/mertskaplan/turkiyede-gunluk-covid-19-grafigi/blob/main/vaccine.xlsx?raw=true" target="_blank">Excel</a> formatındaki verilere grafiğin GitHub sayfasından erişilebilir. Derlenen verilerin güvenilirliği ve devamlılığı konusunda ise grafik çalışmasının bir iddiası yoktur.</li>
