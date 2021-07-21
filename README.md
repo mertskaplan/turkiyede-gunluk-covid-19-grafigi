@@ -2,6 +2,7 @@
 # Türkiye'de günlük Covid-19 aşı, vaka, hasta ve ölüm grafiği
 
 > **covid19tr** - v1.2
+> 
 > https://lab.mertskaplan.com/covid19tr
 
 
