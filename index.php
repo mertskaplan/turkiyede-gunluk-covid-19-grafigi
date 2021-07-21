@@ -43,7 +43,7 @@ include 'functions.php';
 $json = find('var geneldurumjson = ', ';//]]>', curl('https://covid19.saglik.gov.tr/TR-66935/genel-koronavirus-tablosu.html'));
 $infection = json_decode($json[0], true);
 
-include_once('vaccine.php');
+$vaccine = json_decode(file_get_contents('https://raw.githubusercontent.com/mertskaplan/turkiyede-gunluk-covid-19-grafigi/main/vaccine.json'), true);
 
 /* Combine case numbers with vaccine numbers */
 $iv = array();
@@ -310,7 +310,7 @@ foreach($iv as &$b) {
 			<li><em>“Vaka - vefat oranı”, “Hasta - vefat oranı”</em>, <em>“Ağır hasta - vefat oranı”</em> ve uygulanan aşı dozu sayısının 18 yaş ve üstü nüfusa oranı, Bakanlıktan ve <a href="https://data.tuik.gov.tr/Bulten/Index?p=Istatistiklerle-Cocuk-2020-37228" target="_blank">TÜİK</a>'ten alınan veriler işlenerek elde edilmiştir.</li>
 			<li>Sayı niteliğindeki verilere dair referans aralığı tablonun sol bölümünde, oran niteliğindeki verilere dair referans aralığı ise tablonun sağ bölümünde gösterilmiştir.</li>
 			<li><strong>PHP</strong> ve <strong>JS</strong> ile hazırlanan ve veri görselleştirmesi için <strong>Google Charts</strong>’ın kullanıldığı grafik açık kaynak kodlu olup, <a href="https://github.com/mertskaplan/turkiyede-gunluk-covid-19-grafigi" target="_blank">GitHub</a> üzerinden kaynak kodlarına erişilebilir.</li>
-			<li>Aşılara dair derlenen <a href="https://raw.githubusercontent.com/mertskaplan/turkiyede-gunluk-covid-19-grafigi/main/vaccine.json" target="_blank">JSON</a>, <a href="https://github.com/mertskaplan/turkiyede-gunluk-covid-19-grafigi/blob/main/vaccine.php" target="_blank">PHP Array</a> ve <a href="https://github.com/mertskaplan/turkiyede-gunluk-covid-19-grafigi/blob/main/vaccine.xlsx?raw=true" target="_blank">Excel</a> formatındaki verilere grafiğin GitHub sayfasından erişilebilir. Derlenen verilerin güvenilirliği ve devamlılığı konusunda ise grafik çalışmasının bir iddiası yoktur.</li>
+			<li>Aşılara dair derlenen <a href="https://raw.githubusercontent.com/mertskaplan/turkiyede-gunluk-covid-19-grafigi/main/vaccine.json" target="_blank">JSON</a> ve <a href="https://github.com/mertskaplan/turkiyede-gunluk-covid-19-grafigi/blob/main/vaccine.xlsx?raw=true" target="_blank">Excel</a> formatındaki verilere grafiğin GitHub sayfasından erişilebilir. Veriler Bakanlığın standartlarına(!) uygun olarak hazırlanmıştır ve verilerin güvenilirliği ile devamlılığı konusunda grafik çalışmasının bir iddiası yoktur.</li>
 			<li>Grafikle ilgili olarak soru, öneri ve eleştiri gibi konularda <em class="msk-selectAll">mail@mertskaplan.com</em> adresi ile iletişime geçebilirsiniz.</li>
 		</ol>
 	</div>
