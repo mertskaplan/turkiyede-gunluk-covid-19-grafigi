@@ -304,8 +304,8 @@ foreach($iv as &$b) {
 	<div class="msk-Notes">
 		<h2>Grafik bilgi notu</h2>
 		<ol>
-			<li><strong>Grafik</strong>, Türkiye’ye dair <strong>Sağlık Bakanlığı</strong>nın paylaştığı <strong>Kovid-19</strong> verilerinin tek bir tablo üzerinde görselleştirmesi amacıyla hazırlanmıştır. Ancak aşılama sayılarının milyonlarla, vefat sayılarının ise yüzlerle ifade edilmesi gibi nedenlerle tüm veriler tek tablo üzerinde anlamlı bir sonuç oluşturamadığı için anlamlı okumaların yapılabilmesi için belirli veri setleri gizlenerek dört sekme oluşturulmuştur.</li>
-			<li>Günlük <strong>Kovid-19</strong> vaka, hasta ve vefat sayısı gibi veriler Sağlık Bakanlığının yayımladığı <a href="https://covid19.saglik.gov.tr/TR-66935/genel-koronavirus-tablosu.html" target="_blank">Genel Koronavirüs Tablosu</a>’ndan <strong>anlık ve otomatik</strong> olarak çekilmektedir.</li>
+			<li><strong>Grafik</strong>, Türkiye’ye dair <strong>Sağlık Bakanlığı</strong>nın paylaştığı <strong>Covid-19</strong> verilerinin tek bir tablo üzerinde görselleştirmesi amacıyla hazırlanmıştır. Ancak aşılama sayılarının milyonlarla, vefat sayılarının ise yüzlerle ifade edilmesi gibi nedenlerle tüm veriler tek tablo üzerinde anlamlı bir sonuç oluşturamadığı için anlamlı okumaların yapılabilmesi için belirli veri setleri gizlenerek dört sekme oluşturulmuştur.</li>
+			<li>Günlük <strong>Covid-19</strong> vaka, hasta ve vefat sayısı gibi veriler Sağlık Bakanlığının yayımladığı <a href="https://covid19.saglik.gov.tr/TR-66935/genel-koronavirus-tablosu.html" target="_blank">Genel Koronavirüs Tablosu</a>’ndan <strong>anlık ve otomatik</strong> olarak çekilmektedir.</li>
 			<li>Aşılama sayıları ile ilgili olarak Bakanlık tarafından sadece toplam aşı miktarları paylaşıldığı için birinci ve ikinci doz aşılara dair günlük aşılama sayıları Bakanlığın <a href="https://covid19asi.saglik.gov.tr" target="_blank">covid19asi.saglik.gov.tr</a> adresli internet sitesinin <a href="https://web.archive.org/web/*/https://covid19asi.saglik.gov.tr/" target="_blank">The Wayback Machine</a> üzerindeki ilgili güne dair son kaydı esas alınarak, üçüncü doz aşılara dair günlük aşılama sayıları ise yine Bakanlığın <a href="https://covid19.saglik.gov.tr" target="_blank">covid19.saglik.gov.tr</a> adresli internet sitesinin <a href="https://web.archive.org/web/*/https://covid19.saglik.gov.tr/" target="_blank">The Wayback Machine</a> üzerindeki ilgili güne dair son kaydı esas alınarak <strong>derlenmiştir.</strong></li>
 			<li><em>“Vaka - vefat oranı”, “Hasta - vefat oranı”</em>, <em>“Ağır hasta - vefat oranı”</em> ve uygulanan aşı dozu sayısının 18 yaş ve üstü nüfusa oranı, Bakanlıktan ve <a href="https://data.tuik.gov.tr/Bulten/Index?p=Istatistiklerle-Cocuk-2020-37228" target="_blank">TÜİK</a>'ten alınan veriler işlenerek elde edilmiştir.</li>
 			<li>Sayı niteliğindeki verilere dair referans aralığı tablonun sol bölümünde, oran niteliğindeki verilere dair referans aralığı ise tablonun sağ bölümünde gösterilmiştir.</li>
@@ -315,7 +315,7 @@ foreach($iv as &$b) {
 		</ol>
 	</div>
 	<div class="msk-footer">
-	     <p>İçerik <a rel="license" title="Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International" href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a>, kaynak kodları <a title="Massachusetts Institute of Technology License" href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">MIT</a> lisansı altındadır.</p>
+	     <p>İçerik <a rel="license" title="Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International" href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a>, kaynak kodları <a title="Massachusetts Institute of Technology License" href="https://github.com/mertskaplan/turkiyede-gunluk-covid-19-grafigi/blob/main/LICENSE" target="_blank">MIT</a> lisansı altındadır.</p>
 	</div>
 </body>
 </html>
