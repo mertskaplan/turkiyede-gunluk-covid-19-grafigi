@@ -32,14 +32,20 @@ include 'functions.php';
     <link rel="icon" type="image/png" sizes="16x16" href="img/favicon-16x16.png">
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="msapplication-TileImage" content="img/ms-icon-144x144.png">
+
+    <link href="assets/styles.css" rel="stylesheet">
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <script type="text/javascript">
         google.load("visualization", "1", {packages:["corechart"]});
         google.setOnLoadCallback(drawChart);
         function drawChart() {
             var data = google.visualization.arrayToDataTable([
-                ['Tarih',   'Günlük vaka sayısı',  'Günlük hasta sayısı', 'Günlük vefat sayısı', 'Günlük ağır hasta sayısı', 'Toplam aşı sayısı', '1. doz aşı sayısı', '2. doz aşı sayısı', '3. doz aşı sayısı', 'Vaka - vefat oranı', 'Hasta - vefat oranı', 'Ağır hasta - vefat oranı', '1. Doz aşı yaptıranların 18 yaş ve üstü nüfusa oranı', '2. Doz aşı yaptıranların 18 yaş ve üstü nüfusa oranı', '3. Doz aşı yaptıranların 18 yaş ve üstü nüfusa oranı'],
-<?php 
+                ['Tarih', 'Günlük test sayısı', 'Günlük vaka sayısı', 'Günlük hasta sayısı', 'Günlük vefat sayısı', 'Günlük iyileşen sayısı', 'Toplam test sayısı', 'Toplam hasta sayısı', 'Toplam vefat sayısı', 'Toplam iyileşen sayısı', 'Toplam yoğun bakım hastası sayısı', 'Toplam entübe sayısı', 'Hastalarda zatüre oranı', 'Günlük ağır hasta sayısı', 'Yatak doluluk oranı', 'Erişkin yoğun bakım doluluk oranı', 'Ventilatör doluluk oranı', 'Ortalama filyasyon süresi', 'Ortalama temaslı tespit süresi', 'Filyasyon oranı', 'Toplam aşı sayısı', '1. doz aşı sayısı', '2. doz aşı sayısı', '3. doz aşı sayısı', '1 doz aşı yaptıranların 18 yaş ve üzeri nüfusa oranı', '2 doz aşı yaptıranların 18 yaş ve üzeri nüfusa oranı', '3 doz aşı yaptıranların 18 yaş ve üzeri nüfusa oranı', 'Vaka - vefat oranı', 'Hasta - vefat oranı', 'Ağır hasta - vefat oranı',  'Aktif hasta sayısı', 'Aktif hasta oranı', 'Toplam vaka sayısı', 'Aktif vaka sayısı', 'Aktif vaka oranı', 'Günlük vaka değişim oranı'],
+
+<?php
+$population         = 83614362;     // https://data.tuik.gov.tr/Bulten/Index?p=Istatistiklerle-Cocuk-2020-37228
+$populationUnder18  = 22750657;
+
 $json = find('var geneldurumjson = ', ';//]]>', curl('https://covid19.saglik.gov.tr/TR-66935/genel-koronavirus-tablosu.html'));
 $infection = json_decode($json[0], true);
 
@@ -67,69 +73,134 @@ foreach($iv as $key => $value) {
 }
 
 $iv = json_encode($iv);
-$iv = str_replace('.', '', $iv);
+//$iv = str_replace('.', '', $iv);
 $iv = json_decode($iv, true);
 $iv = array_reverse($iv);
 
 foreach($iv as &$b) {
-//    unset($b['tarih']);                                   // 0
-    unset($b['gunluk_test']);                       
-    $b['gunluk_vaka'] = (int)$b['gunluk_vaka'];             // 1
-    $b['gunluk_hasta'] = (int)$b['gunluk_hasta'];           // 2
-    $b['agir_hasta_sayisi'] = (int)$b['agir_hasta_sayisi']; // 3
-    $b['gunluk_vefat'] = (int)$b['gunluk_vefat'];           // 4
-    unset($b['gunluk_iyilesen']);
-    unset($b['toplam_test']);
-    unset($b['toplam_hasta']);
-    unset($b['toplam_vefat']);
-    unset($b['toplam_iyilesen']);
-    unset($b['toplam_yogun_bakim']);
-    unset($b['toplam_entube']);
-    unset($b['hastalarda_zaturre_oran']);
-//    $b['hastalarda_zaturre_oran'] = (int)$b['hastalarda_zaturre_oran'];
-    unset($b['yatak_doluluk_orani']);
-//    $b['yatak_doluluk_orani'] = (int)$b['yatak_doluluk_orani'];
-    unset($b['eriskin_yogun_bakim_doluluk_orani']);
-    unset($b['ventilator_doluluk_orani']);
-    unset($b['ortalama_filyasyon_suresi']);
-    unset($b['ortalama_temasli_tespit_suresi']);
-    unset($b['filyasyon_orani']);
-    (!empty($b['toplam_asi'])) ? $b['toplam_asi'] = (int)$b['toplam_asi'] : $b['toplam_asi'] = null;    // 5
-    (!empty($b['1_doz_asi'])) ? $b['1_doz_asi'] = (int)$b['1_doz_asi'] : $b['1_doz_asi'] = null;        // 6
-    (!empty($b['2_doz_asi'])) ? $b['2_doz_asi'] = (int)$b['2_doz_asi'] : $b['2_doz_asi'] = null;        // 7
-    (!empty($b['3_doz_asi'])) ? $b['3_doz_asi'] = (int)$b['3_doz_asi'] : $b['3_doz_asi'] = null;        // 8
+    $b['tarih'] = trim($b['tarih']);                                      								// 0
+	$b['gunluk_test'] = clearInteger($b['gunluk_test']);												// 1
+    $b['gunluk_vaka'] = clearInteger($b['gunluk_vaka']);												// 2
+    $b['gunluk_hasta'] = clearInteger($b['gunluk_hasta']);												// 3
+    $b['gunluk_vefat'] = clearInteger($b['gunluk_vefat']);     											// 4
+    $b['gunluk_iyilesen'] = clearInteger($b['gunluk_iyilesen']);										// 5
+	$b['toplam_test'] = clearInteger($b['toplam_test']);												// 6
+    $b['toplam_hasta'] = clearInteger($b['toplam_hasta']);		// toplam vaka diye geçiyor				// 7
+	$b['toplam_vefat'] = clearInteger($b['toplam_vefat']);												// 8
+	$b['toplam_iyilesen'] = clearInteger($b['toplam_iyilesen']);										// 9
+	$b['toplam_yogun_bakim'] = clearInteger($b['toplam_yogun_bakim']);									// 10
+	$b['toplam_entube'] = clearInteger($b['toplam_entube']);											// 11
+    $b['hastalarda_zaturre_oran'] = clearPercent($b['hastalarda_zaturre_oran']);						// 12
+    $b['agir_hasta_sayisi'] = clearInteger($b['agir_hasta_sayisi']); 									// 13
+    $b['yatak_doluluk_orani'] = clearPercent($b['yatak_doluluk_orani']);								// 14
+    $b['eriskin_yogun_bakim_doluluk_orani'] = clearPercent($b['eriskin_yogun_bakim_doluluk_orani']);	// 15
+    $b['ventilator_doluluk_orani'] = clearPercent($b['ventilator_doluluk_orani']);						// 16
+    $b['ortalama_filyasyon_suresi'] = clearPercent($b['ortalama_filyasyon_suresi']);					// 17
+    $b['ortalama_temasli_tespit_suresi'] = clearInteger($b['ortalama_temasli_tespit_suresi']);			// 18
+    $b['filyasyon_orani'] = clearPercent($b['filyasyon_orani']);										// 19
 
-    $b['vaka_vefat'] = percent($b['gunluk_vaka'], $b['gunluk_vefat']);                                  // 9
-    $b['hasta_vefat'] = percent($b['gunluk_hasta'], $b['gunluk_vefat']);                                // 10
-    $b['agir_hasta_vefat'] = percent($b['agir_hasta_sayisi'], $b['gunluk_vefat']);                      // 11
+    (!empty($b['toplam_asi'])) ? $b['toplam_asi'] = (int)$b['toplam_asi'] : $b['toplam_asi'] = null;    // 20
+    (!empty($b['1_doz_asi'])) ? $b['1_doz_asi'] = (int)$b['1_doz_asi'] : $b['1_doz_asi'] = null;        // 21
+    (!empty($b['2_doz_asi'])) ? $b['2_doz_asi'] = (int)$b['2_doz_asi'] : $b['2_doz_asi'] = null;        // 22
+    (!empty($b['3_doz_asi'])) ? $b['3_doz_asi'] = (int)$b['3_doz_asi'] : $b['3_doz_asi'] = null;        // 23
+	
+    (!empty($b['1_doz_asi'])) ? $b['1_doz_orani'] = percent($population - $populationUnder18, $b['1_doz_asi']) : $b['1_doz_orani'] = null; // 24
+    (!empty($b['2_doz_asi'])) ? $b['2_doz_orani'] = percent($population - $populationUnder18, $b['2_doz_asi']) : $b['2_doz_orani'] = null; // 25
+    (!empty($b['3_doz_asi'])) ? $b['3_doz_orani'] = percent($population - $populationUnder18, $b['3_doz_asi']) : $b['3_doz_orani'] = null; // 26
 
-    (!empty($b['1_doz_asi'])) ? $b['1_doz_orani'] = percent(83614362 - 22750657, $b['1_doz_asi']) : $b['1_doz_orani'] = null; // 12  // https://data.tuik.gov.tr/Bulten/Index?p=Istatistiklerle-Cocuk-2020-37228
-    (!empty($b['2_doz_asi'])) ? $b['2_doz_orani'] = percent(83614362 - 22750657, $b['2_doz_asi']) : $b['2_doz_orani'] = null; // 13
-    (!empty($b['3_doz_asi'])) ? $b['3_doz_orani'] = percent(83614362 - 22750657, $b['3_doz_asi']) : $b['3_doz_orani'] = null; // 14
+    $b['vaka_vefat'] = percent($b['gunluk_vaka'], $b['gunluk_vefat']);                                  // 27
+    $b['hasta_vefat'] = percent($b['gunluk_hasta'], $b['gunluk_vefat']);                                // 28
+    $b['agir_hasta_vefat'] = percent($b['agir_hasta_sayisi'], $b['gunluk_vefat']);                      // 29
+}
 
+    // önceki hafta ortalamasına kıyasla oranları verilebilir
+
+for ($x = 0; isset($iv[$x]); $x++) {
+
+    if ($x > 479) { // 3 Temmuz 2021 day 479
+        $iv[$x]['toplam_test'] = $iv[$x - 1]['toplam_test'] + $iv[$x]['gunluk_test'];
+//        $iv[$x]['toplam_vaka'] = $iv[$x - 1]['toplam_vaka'] + $iv[$x]['gunluk_vaka'];
+        $iv[$x]['toplam_vefat'] = $iv[$x - 1]['toplam_vefat'] + $iv[$x]['gunluk_vefat'];
+        $iv[$x]['toplam_iyilesen'] = $iv[$x - 1]['toplam_iyilesen'] + $iv[$x]['gunluk_iyilesen'];
+    }
+
+    if ($x < 276) { // 12 Aralık 2021 day 276
+        $iv[$x]['toplam_hasta'] = $iv[$x]['toplam_hasta'];
+        if ($x < 274) { // 10 Aralık 2021 day 274
+            $iv[$x]['aktif_hasta'] = $iv[$x]['toplam_hasta'] - ($iv[$x]['toplam_iyilesen'] + $iv[$x]['toplam_vefat']);  // 30
+            $iv[$x]['aktif_hasta_orani'] = percent($population, $iv[$x]['aktif_hasta']);                // 31
+        } else {
+            $iv[$x]['aktif_hasta'] = null;
+            $iv[$x]['aktif_hasta_orani'] = null;
+        }
+        $iv[$x]['toplam_vaka'] = null;                                                                  // 32
+        $iv[$x]['aktif_vaka'] = null;                                                                   // 33
+        $iv[$x]['aktif_vaka_orani'] = null;                                                             // 34
+    } else {
+        $iv[$x]['aktif_hasta'] = null;
+        $iv[$x]['aktif_hasta_orani'] = null;
+        if ($x > 479) {
+            $iv[$x]['toplam_vaka'] = $iv[$x - 1]['toplam_vaka'] + $iv[$x]['gunluk_vaka'];
+        } else {
+            $iv[$x]['toplam_vaka'] = $iv[$x]['toplam_hasta'];                                                  
+        }
+        $iv[$x]['toplam_hasta'] = null;
+        $iv[$x]['aktif_vaka'] = $iv[$x]['toplam_vaka'] - ($iv[$x]['toplam_iyilesen'] + $iv[$x]['toplam_vefat']);
+        $iv[$x]['aktif_vaka_orani'] = percent($population, $iv[$x]['aktif_vaka']);
+    }
+
+    if (!$x == 0 && !empty($iv[$x - 1]['gunluk_vaka'])) {
+        $iv[$x]['gunluk_vaka_degisim_orani'] = number_format($iv[$x]['gunluk_vaka'] / $iv[$x - 1]['gunluk_vaka'], 2);
+    } else {
+        $iv[$x]['gunluk_vaka_degisim_orani'] = 1;                                                       // 35
+    }
+}
+
+/*
+for ($x = 479 + 1; isset($iv[$x]); $x++) { // 3 Temmuz 2021 day 479
+    $iv[$x]['toplam_test'] = $iv[$x - 1]['toplam_test'] + $iv[$x]['gunluk_test'];
+    $iv[$x]['toplam_vaka'] = $iv[$x - 1]['toplam_vaka'] + $iv[$x]['gunluk_vaka'];
+    $iv[$x]['toplam_vefat'] = $iv[$x - 1]['toplam_vefat'] + $iv[$x]['gunluk_vefat'];
+    $iv[$x]['toplam_iyilesen'] = $iv[$x - 1]['toplam_iyilesen'] + $iv[$x]['gunluk_iyilesen'];
+}
+*/
+foreach($iv as &$b) {
     $c = array_values($b);
     echo "                ";
     print_r(json_encode($c));
     echo ",\n";
 }
+
+//print_r($iv[479]);
+//print_r($iv[480]);
+//print_r($iv[275]);
+//print_r($iv[234]);
+//print_r($iv[277]);
+//print_r($iv[506]);
+
 ?>
         ]);
 
         var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
 
-        const graphics = [0,6,7,8,12,13,14];        // showVaccine
-        const graphicsInfection = [0,1,2,4,3,9];    // showInfection
-        const graphicsSick = [0,2,4,3,10,11];       // showSick
-        const graphicsDeath = [0,3,9,10,11];        // showDeath
+        const graphics = [0,21,22,23,24,25,26];             // showVaccine
+        const graphicsDailyInfection = [0,2,3,13,4,27];     // showDailyInfection
+        const graphicsActiveInfection = [0,30,31,33,34,35]; // showActiveInfection
+        const graphicsSick = [0,3,13,4,28,29];              // showSick
+        const graphicsDeath = [0,4,27,28,29];               // showDeath
 
         view = new google.visualization.DataView(data);
         view.setColumns(graphics);
         var options = {
                 title: 'Türkiye\'de günlük Covid-19 aşısı grafiği',
                 vAxes: {
+                    0: {
+                        title: 'Uygulanan doz sayısı'
+                    },
                     1: {
+                        title: 'Aşılama oranı',
                         gridlines: {color: 'transparent'},
-                        format: '#\'%\'',
+                        format: '\'%\'#',
                         minValue: 0,
                         maxValue: 100
                     },
@@ -150,9 +221,13 @@ foreach($iv as &$b) {
             var options = {
                 title: 'Türkiye\'de günlük Covid-19 aşısı grafiği',
                 vAxes: {
+                    0: {
+                        title: 'Uygulanan doz sayısı'
+                    },
                     1: {
+                        title: 'Aşılama oranı',
                         gridlines: {color: 'transparent'},
-                        format: '#\'%\'',
+                        format: '\'%\'#',
                         minValue: 0,
                         maxValue: 100
                     },
@@ -167,22 +242,55 @@ foreach($iv as &$b) {
             chart.draw(view, options);
         }
         
-        var showInfection = document.getElementById("infection");
-        showInfection.onclick = function() {
+        var showDailyInfection = document.getElementById("dailyInfection");
+        showDailyInfection.onclick = function() {
             view = new google.visualization.DataView(data);
-            view.setColumns(graphicsInfection);
+            view.setColumns(graphicsDailyInfection);
             var options = {
                 title: 'Türkiye\'de günlük Covid-19 vakası grafiği',
                 vAxes: {
+                    0: {
+                        title: 'Vaka sayısı'
+                    },
                     1: {
+                        title: 'Vaka oranı',
                         gridlines: {color: 'transparent'},
-                        format: '#\'%\'',
+                        format: '\'%\'#',
                         minValue: 0,
                         maxValue: 5
                     },
                 },
                 series: {
                     '4':{targetAxisIndex:1},
+                },
+                legend: {position: 'bottom'}
+            }
+            chart.draw(view, options);
+        }
+
+        var showActiveInfection = document.getElementById("activeInfection");
+        showActiveInfection.onclick = function() {
+            view = new google.visualization.DataView(data);
+            view.setColumns(graphicsActiveInfection);
+            var options = {
+                title: 'Türkiye\'de aktif Covid-19 vakası grafiği',
+                vAxes: {
+                    0: {
+                        title: 'Vaka sayısı'
+                    },
+                    1: {
+                        title: 'Büyüme faktörü',
+                        gridlines: {color: 'transparent'},
+                        minValue: 0,
+                        maxValue: 2
+                    },
+                },
+                series: {
+                    '0':{targetAxisIndex:0},
+                    '1':{targetAxisIndex:1},
+                    '2':{targetAxisIndex:0},
+                    '3':{targetAxisIndex:1},
+                    '4':{targetAxisIndex:1}
                 },
                 legend: {position: 'bottom'}
             }
@@ -197,9 +305,13 @@ foreach($iv as &$b) {
             var options = {
                 title: 'Türkiye\'de günlük Covid-19 hastası grafiği',
                 vAxes: {
+                    0: {
+                        title: 'Hasta sayısı'
+                    },
                     1: {
+                        title: 'Hasta oranı',
                         gridlines: {color: 'transparent'},
-                        format: '#\'%\'',
+                        format: '\'%\'#',
                         minValue: 0,
                         maxValue: 30
                     },
@@ -220,9 +332,13 @@ foreach($iv as &$b) {
             var options = {
                 title: 'Türkiye\'de günlük Covid-19 vefat grafiği',
                 vAxes: {
+                    0: {
+                        title: 'Vefat sayısı'
+                    },
                     1: {
+                        title: 'Vefat oranı',
                         gridlines: {color: 'transparent'},
-                        format: '#\'%\'',
+                        format: '\'%\'#',
                         minValue: 0,
                         maxValue: 30
                     },
@@ -238,65 +354,12 @@ foreach($iv as &$b) {
         }
     }
     </script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
-        body {
-            font-family: 'Open Sans', sans-serif;
-            margin: 0;
-        }
-        .mskMenu {
-            text-align: center;
-        }
-        .button {
-            margin: 25px 5px 0;
-            padding: 7px;
-            border: 1px solid #36c;
-            border-radius: 0;
-            background: transparent;
-            color: #36c;
-            font-size: 95%;
-            text-decoration: none;
-            display: inline-block;
-        }
-        .button:hover, .button:target {
-            background-color: #36c;
-            color: #fff;
-        }
-		.msk-Notes {
-			margin: 70px 15px 30px;
-		}
-		li {
-			margin-bottom: 10px;
-		}
-		h2 {
-			margin-left: 40px;
-		}
-		a {
-			color: #36c;
-			text-decoration: none;
-		}
-		a:hover {
-			color: #14d;
-		}
-		em {
-			margin-right:5px;
-		}
-		.msk-selectAll {
-			-webkit-user-select: all;
-			-moz-user-select: all;
-			-ms-user-select: all;
-			user-select: all;
-		}
-		.msk-footer {
-			text-align: center;
-			font-size: 90%;
-		}
-    </style>
 </head>
 <body>
 	<div class="mskMenu">
 		<a class="button" id="vaccine" href="#vaccine">Aşılama verileri</a>
-		<a class="button" id="infection" href="#infection">Vaka verileri</a>
+		<a class="button" id="dailyInfection" href="#dailyInfection">Günlük vaka verileri</a>
+        <a class="button" id="activeInfection" href="#activeInfection">Aktif vaka verileri</a>
 		<a class="button" id="sick" href="#sick">Hasta verileri</a>
 		<a class="button" id="death" href="#death">Vefat verileri</a>
 	</div>
@@ -304,11 +367,13 @@ foreach($iv as &$b) {
 	<div class="msk-Notes">
 		<h2>Grafik bilgi notu</h2>
 		<ol>
-			<li><strong>Grafik</strong>, Türkiye’ye dair <strong>Sağlık Bakanlığı</strong>nın paylaştığı <strong>Covid-19</strong> verilerinin tek bir tablo üzerinde görselleştirmesi amacıyla hazırlanmıştır. Ancak aşılama sayılarının milyonlarla, vefat sayılarının ise yüzlerle ifade edilmesi gibi nedenlerle tüm veriler tek tablo üzerinde anlamlı bir sonuç oluşturamadığı için anlamlı okumaların yapılabilmesi için belirli veri setleri gizlenerek dört sekme oluşturulmuştur.</li>
+			<li><strong>Grafik</strong>, Türkiye’ye dair <strong>Sağlık Bakanlığı</strong>nın paylaştığı <strong>Covid-19</strong> verilerinin tek bir tablo üzerinde görselleştirmesi amacıyla hazırlanmıştır. Ancak aşılama sayılarının milyonlarla, vefat sayılarının ise yüzlerle ifade edilmesi gibi nedenlerle tüm veriler tek tablo üzerinde anlamlı bir sonuç oluşturamadığı için anlamlı okumaların yapılabilmesi için belirli veri setleri gizlenerek beş sekme oluşturulmuştur.</li>
 			<li>Günlük <strong>Covid-19</strong> vaka, hasta ve vefat sayısı gibi veriler Sağlık Bakanlığının yayımladığı <a href="https://covid19.saglik.gov.tr/TR-66935/genel-koronavirus-tablosu.html" target="_blank">Genel Koronavirüs Tablosu</a>’ndan <strong>anlık ve otomatik</strong> olarak çekilmektedir.</li>
-			<li>Aşılama sayıları ile ilgili olarak Bakanlık tarafından sadece toplam aşı miktarları paylaşıldığı için birinci ve ikinci doz aşılara dair günlük aşılama sayıları Bakanlığın <a href="https://covid19asi.saglik.gov.tr" target="_blank">covid19asi.saglik.gov.tr</a> adresli internet sitesinin <a href="https://web.archive.org/web/*/https://covid19asi.saglik.gov.tr/" target="_blank">The Wayback Machine</a> üzerindeki ilgili güne dair son kaydı esas alınarak, üçüncü doz aşılara dair günlük aşılama sayıları ise yine Bakanlığın <a href="https://covid19.saglik.gov.tr" target="_blank">covid19.saglik.gov.tr</a> adresli internet sitesinin <a href="https://web.archive.org/web/*/https://covid19.saglik.gov.tr/" target="_blank">The Wayback Machine</a> üzerindeki ilgili güne dair son kaydı esas alınarak <strong>derlenmiştir.</strong></li>
+			<li>Aşılama sayıları ile ilgili olarak Bakanlık tarafından sadece toplam aşı miktarları paylaşıldığı için birinci ve ikinci doz aşılara dair günlük aşılama sayıları Bakanlığın <a href="https://covid19asi.saglik.gov.tr" target="_blank">covid19asi.saglik.gov.tr</a> adresli internet sitesinin <a href="https://web.archive.org/web/*/https://covid19asi.saglik.gov.tr/" target="_blank">The Wayback Machine</a> üzerindeki ilgili güne dair son kaydı esas alınarak, üçüncü doz aşılara dair günlük aşılama sayıları ise yine Bakanlığın <a href="https://covid19.saglik.gov.tr" target="_blank">covid19.saglik.gov.tr</a> adresli internet sitesinin <a href="https://web.archive.org/web/*/https://covid19.saglik.gov.tr/" target="_blank">The Wayback Machine</a> üzerindeki ilgili güne dair son kaydı esas alınarak <strong>derlenmiş ve günlük olarak güncellenmektedir.</strong></li>
 			<li><em>“Vaka - vefat oranı”, “Hasta - vefat oranı”</em>, <em>“Ağır hasta - vefat oranı”</em> ve uygulanan aşı dozu sayısının 18 yaş ve üstü nüfusa oranı, Bakanlıktan ve <a href="https://data.tuik.gov.tr/Bulten/Index?p=Istatistiklerle-Cocuk-2020-37228" target="_blank">TÜİK</a>'ten alınan veriler işlenerek elde edilmiştir.</li>
 			<li>Sayı niteliğindeki verilere dair referans aralığı tablonun sol bölümünde, oran niteliğindeki verilere dair referans aralığı ise tablonun sağ bölümünde gösterilmiştir.</li>
+			<li><em>"Aktif hasta sayısı"</em> ve <em>"aktif vaka sayısı"</em>, Bakanlığın vaka ve hasta sayılarını açıkladığı ve açıklamayı terk ettiği tarihler göz önünde bulundurularak <em>"toplam vaka/hasta"</em> sayısından <em>"toplam iyileşen sayısı"</em> ve <em>"toplam vefat sayısı"</em> çıkarılarak hesaplanmıştır. <em>"Aktif hasta oranı"</em> ve <em>"aktif vaka oranı"</em> ise nüfusa bölünerek elde edilen günlük insidans oranıdır.</li>
+			<li><em>"Günlük vaka değişim oranı"</em>, ilgili o güne dair açıklanan günlük yeni vaka sayısının bir önceki günkü yeni vaka sayısına bölünerek elde edilen büyüme faktörü metriğidir. Büyüme faktörünün 1’den fazla olması salgının hızlı olduğunu, 1’den az olması ise salgının yavaşladığını gösterir.</li>
 			<li><strong>PHP</strong> ve <strong>JS</strong> ile hazırlanan ve veri görselleştirmesi için <strong>Google Charts</strong>’ın kullanıldığı grafik açık kaynak kodlu olup, <a href="https://github.com/mertskaplan/turkiyede-gunluk-covid-19-grafigi" target="_blank">GitHub</a> üzerinden kaynak kodlarına erişilebilir.</li>
 			<li>Aşılara dair derlenen <a href="https://raw.githubusercontent.com/mertskaplan/turkiyede-gunluk-covid-19-grafigi/main/vaccine.json" target="_blank">JSON</a> ve <a href="https://github.com/mertskaplan/turkiyede-gunluk-covid-19-grafigi/blob/main/vaccine.xlsx?raw=true" target="_blank">Excel</a> formatındaki verilere grafiğin GitHub sayfasından erişilebilir. Veriler Bakanlığın standartlarına(!) uygun olarak hazırlanmıştır ve verilerin güvenilirliği ile devamlılığı konusunda grafik çalışmasının bir iddiası yoktur.</li>
 			<li>Grafikle ilgili olarak soru, öneri ve eleştiri gibi konularda <em class="msk-selectAll">mail@mertskaplan.com</em> adresi ile iletişime geçebilirsiniz.</li>

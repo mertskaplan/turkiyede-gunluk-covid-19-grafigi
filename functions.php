@@ -25,3 +25,11 @@ function percent($a, $b) {
          return 0;
     }
 }
+
+function clearInteger($x) {
+	return (int)str_replace('.', '', $x);
+}
+
+function clearPercent($x) {
+	return str_replace(',', '.', $x);
+}

@@ -1,0 +1,52 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+body {
+    font-family: 'Open Sans', sans-serif;
+    margin: 0;
+}
+.mskMenu {
+    text-align: center;
+}
+.button {
+    margin: 25px 5px 0;
+    padding: 7px;
+    border: 1px solid #36c;
+    border-radius: 0;
+    background: transparent;
+    color: #36c;
+    font-size: 95%;
+    text-decoration: none;
+    display: inline-block;
+}
+.button:hover, .button:target {
+    background-color: #36c;
+    color: #fff;
+}
+.msk-Notes {
+    margin: 70px 15px 30px;
+}
+li {
+    margin-bottom: 10px;
+}
+h2 {
+    margin-left: 40px;
+}
+a {
+    color: #36c;
+    text-decoration: none;
+}
+a:hover {
+    color: #14d;
+}
+em {
+    margin-right:5px;
+}
+.msk-selectAll {
+    -webkit-user-select: all;
+    -moz-user-select: all;
+    -ms-user-select: all;
+    user-select: all;
+}
+.msk-footer {
+    text-align: center;
+    font-size: 90%;
+}
