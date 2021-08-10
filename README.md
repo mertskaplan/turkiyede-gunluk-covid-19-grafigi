@@ -1,7 +1,7 @@
 
 # Türkiye'de günlük Covid-19 aşı, vaka, hasta ve ölüm grafiği
 
-> **covid19tr** - v1.3
+> **covid19tr** - v1.4
 > 
 > https://lab.mertskaplan.com/covid19tr
 
@@ -24,6 +24,8 @@ Web: [mertskaplan.com](http://mertskaplan.com) | Mail: mail@mertskaplan.com | Tw
 İçerik [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/ "Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International"), kaynak kodları [MIT](https://github.com/mertskaplan/turkiyede-gunluk-covid-19-grafigi/blob/main/LICENSE "Massachusetts Institute of Technology License") lisansı altındadır.
 
 ### Sürüm notları
+##### v1.4 - 10.08.2021
+*  Günlük uygulanan aşı dozlarının sayısı grafiği eklendi.
 ##### v1.3 - 04.08.2021
 * Sağlık Bakanlığı tarafından sağlanan tüm veriler JSON formatında kullanılabilir hale getirildi.
 * CSS kodları ayrı bir dosyaya taşındı.
