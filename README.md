@@ -35,7 +35,7 @@ Web: [mertskaplan.com](http://mertskaplan.com) | Mail: mail@mertskaplan.com | Tw
 * Bakanlığın vaka ve hasta sayılarını açıkladığı ve açıklamayı terk ettiği tarihler göz önünde bulundurularak toplam vaka/hasta sayısından toplam iyileşen sayısı ve toplam vefat sayısı çıkarılarak o güne dair aktif vaka/hasta sayısı hesaplandı.
 * Günlük vaka değişim oranı verisi eklendi.
 * Grafik bölümlerinin işaret ettiği veri türleri bilgisi eklendi.
-* Yeni veriler ilgili ilgili açıklamalar eklendi.
+* Yeni veriler ile ilgili açıklamalar eklendi.
 ##### v1.2 - 21.07.2021
 * Standardın sağlanabilmesi için *"php array"* dosyası terk edilerek veriler *JSON* formatında ve *GitHub* üzerinden içe aktarıldı. [[↑](https://github.com/mertskaplan/turkiyede-gunluk-covid-19-grafigi/commit/b72bff2b5b3ac8cca20be02d1b9d9ab7eb40048f)]
 ##### v1.1 - 18.07.2021
