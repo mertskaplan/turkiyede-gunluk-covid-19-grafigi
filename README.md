@@ -1,7 +1,7 @@
 
 # Türkiye'de günlük Covid-19 aşı, vaka, hasta ve ölüm grafiği
 
-> **covid19tr** - v1.5
+> **covid19tr** - v1.6
 > 
 > https://lab.mertskaplan.com/covid19tr
 
@@ -24,6 +24,8 @@ Web: [mertskaplan.com](http://mertskaplan.com) | Mail: mail@mertskaplan.com | Tw
 İçerik [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/ "Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International"), kaynak kodları [MIT](https://github.com/mertskaplan/turkiyede-gunluk-covid-19-grafigi/blob/main/LICENSE "Massachusetts Institute of Technology License") lisansı altındadır.
 
 ### Sürüm notları
+##### v1.6 - 19.12.2021
+* Yerel ayarlara göre yerel saati/tarihi biçimlendirmek için kullanılan strftime fonksiyonu PHP 8.1.0 itibarıyla kullanılmayacağı için fonksiyondan vazgeçildi. [[↑](https://github.com/mertskaplan/turkiyede-gunluk-covid-19-grafigi/commit/7b10beb65b0d90c47186f6a5d364b359f0cda29b)]
 ##### v1.5 - 11.10.2021
 *  Aşılamanın 15 yaşa ve kronik hastalığı olan 12 yaş çocuklara kadar indirilmesi ile 18 yaş ve üstü nüfusun aşılanma oranı verisinde ortaya çıkan hatanın giderilmesi için aşılama oranı tüm nüfusa göre düzenlendi. [[↑](https://github.com/mertskaplan/turkiyede-gunluk-covid-19-grafigi/commit/764be55c8580b0167b9a128f3e9a26f41236842c)]
 ##### v1.4 - 10.08.2021
