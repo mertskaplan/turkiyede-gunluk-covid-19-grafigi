@@ -68,7 +68,7 @@ foreach($infection as $i) {
 /* end - Combine case numbers with vaccine numbers */
 
 foreach($iv as $key => $value) {
-    $iv[$key]['tarih'] = strftime('%e %B %Y', strtotime($value['tarih']));
+    $iv[$key]['tarih'] = turkishDate('j F Y',$value['tarih']); // strftime('%e %B %Y', strtotime($value['tarih']));
 }
 
 $iv = json_encode($iv);
