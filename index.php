@@ -47,7 +47,6 @@ $populationUnder18  = 22750657; // v1.5 ile artik kullanilmiyor
 
 $json = find('var geneldurumjson = ', ';//]]>', curl('https://covid19.saglik.gov.tr/TR-66935/genel-koronavirus-tablosu.html'));
 $infection = json_decode($json[0], true);
-
 $vaccine = json_decode(file_get_contents('https://raw.githubusercontent.com/mertskaplan/turkiyede-gunluk-covid-19-grafigi/main/vaccine.json'), true);
 
 /* Combine case numbers with vaccine numbers */
@@ -76,39 +75,39 @@ $iv = json_decode($iv, true);
 $iv = array_reverse($iv);
 
 foreach($iv as &$b) {
-    $b['tarih'] = trim($b['tarih']);                                      								// 0
-	$b['gunluk_test'] = clearInteger($b['gunluk_test']);												// 1
-    $b['gunluk_vaka'] = clearInteger($b['gunluk_vaka']);												// 2
-    $b['gunluk_hasta'] = clearInteger($b['gunluk_hasta']);												// 3
-    $b['gunluk_vefat'] = clearInteger($b['gunluk_vefat']);     											// 4
-    $b['gunluk_iyilesen'] = clearInteger($b['gunluk_iyilesen']);										// 5
-	$b['toplam_test'] = clearInteger($b['toplam_test']);												// 6
-    $b['toplam_hasta'] = clearInteger($b['toplam_hasta']);		// toplam vaka diye geçiyor				// 7
-	$b['toplam_vefat'] = clearInteger($b['toplam_vefat']);												// 8
-	$b['toplam_iyilesen'] = clearInteger($b['toplam_iyilesen']);										// 9
-	$b['toplam_yogun_bakim'] = clearInteger($b['toplam_yogun_bakim']);									// 10
-	$b['toplam_entube'] = clearInteger($b['toplam_entube']);											// 11
-    $b['hastalarda_zaturre_oran'] = clearPercent($b['hastalarda_zaturre_oran']);						// 12
-    $b['agir_hasta_sayisi'] = clearInteger($b['agir_hasta_sayisi']); 									// 13
-    $b['yatak_doluluk_orani'] = clearPercent($b['yatak_doluluk_orani']);								// 14
-    $b['eriskin_yogun_bakim_doluluk_orani'] = clearPercent($b['eriskin_yogun_bakim_doluluk_orani']);	// 15
-    $b['ventilator_doluluk_orani'] = clearPercent($b['ventilator_doluluk_orani']);						// 16
-    $b['ortalama_filyasyon_suresi'] = clearPercent($b['ortalama_filyasyon_suresi']);					// 17
-    $b['ortalama_temasli_tespit_suresi'] = clearInteger($b['ortalama_temasli_tespit_suresi']);			// 18
-    $b['filyasyon_orani'] = clearPercent($b['filyasyon_orani']);										// 19
+    $b['tarih'] = trim($b['tarih']);                                                                                    // 0
+    $b['gunluk_test'] = clearInteger($b['gunluk_test']);                                                                // 1
+    $b['gunluk_vaka'] = clearInteger($b['gunluk_vaka']);                                                                // 2
+    $b['gunluk_hasta'] = clearInteger($b['gunluk_hasta']);                                                              // 3
+    $b['gunluk_vefat'] = clearInteger($b['gunluk_vefat']);                                                              // 4
+    $b['gunluk_iyilesen'] = clearInteger($b['gunluk_iyilesen']);                                                        // 5
+    $b['toplam_test'] = clearInteger($b['toplam_test']);                                                                // 6
+    $b['toplam_hasta'] = clearInteger($b['toplam_hasta']); // toplam vaka diye geçiyor                                  // 7
+    $b['toplam_vefat'] = clearInteger($b['toplam_vefat']);                                                              // 8
+    $b['toplam_iyilesen'] = clearInteger($b['toplam_iyilesen']);                                                        // 9
+    $b['toplam_yogun_bakim'] = clearInteger($b['toplam_yogun_bakim']);                                                  // 10
+    $b['toplam_entube'] = clearInteger($b['toplam_entube']);                                                            // 11
+    $b['hastalarda_zaturre_oran'] = clearPercent($b['hastalarda_zaturre_oran']);                                        // 12
+    $b['agir_hasta_sayisi'] = clearInteger($b['agir_hasta_sayisi']);                                                    // 13
+    $b['yatak_doluluk_orani'] = clearPercent($b['yatak_doluluk_orani']);                                                // 14
+    $b['eriskin_yogun_bakim_doluluk_orani'] = clearPercent($b['eriskin_yogun_bakim_doluluk_orani']);                    // 15
+    $b['ventilator_doluluk_orani'] = clearPercent($b['ventilator_doluluk_orani']);                                      // 16
+    $b['ortalama_filyasyon_suresi'] = clearPercent($b['ortalama_filyasyon_suresi']);                                    // 17
+    $b['ortalama_temasli_tespit_suresi'] = clearInteger($b['ortalama_temasli_tespit_suresi']);                          // 18
+    $b['filyasyon_orani'] = clearPercent($b['filyasyon_orani']);                                                        // 19
 
-    (!empty($b['toplam_asi'])) ? $b['toplam_asi'] = (int)$b['toplam_asi'] : $b['toplam_asi'] = null;    // 20
-    (!empty($b['1_doz_asi'])) ? $b['1_doz_asi'] = (int)$b['1_doz_asi'] : $b['1_doz_asi'] = null;        // 21
-    (!empty($b['2_doz_asi'])) ? $b['2_doz_asi'] = (int)$b['2_doz_asi'] : $b['2_doz_asi'] = null;        // 22
-    (!empty($b['3_doz_asi'])) ? $b['3_doz_asi'] = (int)$b['3_doz_asi'] : $b['3_doz_asi'] = null;        // 23
+    (!empty($b['toplam_asi'])) ? $b['toplam_asi'] = (int)$b['toplam_asi'] : $b['toplam_asi'] = null;                    // 20
+    (!empty($b['1_doz_asi'])) ? $b['1_doz_asi'] = (int)$b['1_doz_asi'] : $b['1_doz_asi'] = null;                        // 21
+    (!empty($b['2_doz_asi'])) ? $b['2_doz_asi'] = (int)$b['2_doz_asi'] : $b['2_doz_asi'] = null;                        // 22
+    (!empty($b['3_doz_asi'])) ? $b['3_doz_asi'] = (int)$b['3_doz_asi'] : $b['3_doz_asi'] = null;                        // 23
 	
-    (!empty($b['1_doz_asi'])) ? $b['1_doz_orani'] = percent($population, $b['1_doz_asi']) : $b['1_doz_orani'] = null; // 24
-    (!empty($b['2_doz_asi'])) ? $b['2_doz_orani'] = percent($population, $b['2_doz_asi']) : $b['2_doz_orani'] = null; // 25
-    (!empty($b['3_doz_asi'])) ? $b['3_doz_orani'] = percent($population, $b['3_doz_asi']) : $b['3_doz_orani'] = null; // 26
+    (!empty($b['1_doz_asi'])) ? $b['1_doz_orani'] = percent($population, $b['1_doz_asi']) : $b['1_doz_orani'] = null;   // 24
+    (!empty($b['2_doz_asi'])) ? $b['2_doz_orani'] = percent($population, $b['2_doz_asi']) : $b['2_doz_orani'] = null;   // 25
+    (!empty($b['3_doz_asi'])) ? $b['3_doz_orani'] = percent($population, $b['3_doz_asi']) : $b['3_doz_orani'] = null;   // 26
 
-    $b['vaka_vefat'] = percent($b['gunluk_vaka'], $b['gunluk_vefat']);                                  // 27
-    $b['hasta_vefat'] = percent($b['gunluk_hasta'], $b['gunluk_vefat']);                                // 28
-    $b['agir_hasta_vefat'] = percent($b['agir_hasta_sayisi'], $b['gunluk_vefat']);                      // 29
+    $b['vaka_vefat'] = percent($b['gunluk_vaka'], $b['gunluk_vefat']);                                                  // 27
+    $b['hasta_vefat'] = percent($b['gunluk_hasta'], $b['gunluk_vefat']);                                                // 28
+    $b['agir_hasta_vefat'] = percent($b['agir_hasta_sayisi'], $b['gunluk_vefat']);                                      // 29
 }
 
 for ($x = 0; isset($iv[$x]); $x++) {
@@ -123,14 +122,14 @@ for ($x = 0; isset($iv[$x]); $x++) {
         $iv[$x]['toplam_hasta'] = $iv[$x]['toplam_hasta'];
         if ($x < 274) { // 10 Aralık 2020 day 274
             $iv[$x]['aktif_hasta'] = $iv[$x]['toplam_hasta'] - ($iv[$x]['toplam_iyilesen'] + $iv[$x]['toplam_vefat']);  // 30
-            $iv[$x]['aktif_hasta_orani'] = percent($population, $iv[$x]['aktif_hasta']);                // 31
+            $iv[$x]['aktif_hasta_orani'] = percent($population, $iv[$x]['aktif_hasta']);                                // 31
         } else {
             $iv[$x]['aktif_hasta'] = null;
             $iv[$x]['aktif_hasta_orani'] = null;
         }
-        $iv[$x]['toplam_vaka'] = null;                                                                  // 32
-        $iv[$x]['aktif_vaka'] = null;                                                                   // 33
-        $iv[$x]['aktif_vaka_orani'] = null;                                                             // 34
+        $iv[$x]['toplam_vaka'] = null;                                                                                  // 32
+        $iv[$x]['aktif_vaka'] = null;                                                                                   // 33
+        $iv[$x]['aktif_vaka_orani'] = null;                                                                             // 34
     } else {
         $iv[$x]['aktif_hasta'] = null;
         $iv[$x]['aktif_hasta_orani'] = null;
@@ -145,13 +144,13 @@ for ($x = 0; isset($iv[$x]); $x++) {
     }
 
     if (!empty($iv[$x]['toplam_asi']) && !empty($iv[$x - 1]['toplam_asi'])) {
-        $iv[$x]['gunluk_vaka_degisim_orani'] = number_format($iv[$x]['gunluk_vaka'] / $iv[$x - 1]['gunluk_vaka'], 2); // 35
+        $iv[$x]['gunluk_vaka_degisim_orani'] = number_format($iv[$x]['gunluk_vaka'] / $iv[$x - 1]['gunluk_vaka'], 2);   // 35
 		
-		$iv[$x]['gunluk_1_doz_asi'] = (int)$iv[$x]['1_doz_asi'] - $iv[$x - 1]['1_doz_asi'];				// 36
-		$iv[$x]['gunluk_2_doz_asi'] = (int)$iv[$x]['2_doz_asi'] - $iv[$x - 1]['2_doz_asi'];				// 37
-		$iv[$x]['gunluk_3_doz_asi'] = (int)$iv[$x]['3_doz_asi'] - $iv[$x - 1]['3_doz_asi'];				// 38
+		$iv[$x]['gunluk_1_doz_asi'] = (int)$iv[$x]['1_doz_asi'] - $iv[$x - 1]['1_doz_asi'];				                // 36
+		$iv[$x]['gunluk_2_doz_asi'] = (int)$iv[$x]['2_doz_asi'] - $iv[$x - 1]['2_doz_asi'];				                // 37
+		$iv[$x]['gunluk_3_doz_asi'] = (int)$iv[$x]['3_doz_asi'] - $iv[$x - 1]['3_doz_asi'];				                // 38
 		
-		$iv[$x]['gunluk_asi'] = (int)$iv[$x]['toplam_asi'] - $iv[$x - 1]['toplam_asi'];					// 39
+		$iv[$x]['gunluk_asi'] = (int)$iv[$x]['toplam_asi'] - $iv[$x - 1]['toplam_asi'];					                // 39
     } else {
         $iv[$x]['gunluk_vaka_degisim_orani'] = 1;
 		$iv[$x]['gunluk_asi'] = $iv[$x]['gunluk_1_doz_asi'] = $iv[$x]['gunluk_2_doz_asi'] = $iv[$x]['gunluk_3_doz_asi'] = null;
@@ -386,7 +385,7 @@ foreach($iv as &$b) {
 		</ol>
 	</div>
 	<div class="msk-footer">
-	     <p>İçerik <a rel="license" title="Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International" href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a>, kaynak kodları <a title="Massachusetts Institute of Technology License" href="https://github.com/mertskaplan/turkiyede-gunluk-covid-19-grafigi/blob/main/LICENSE" target="_blank">MIT</a> lisansı altındadır.</p>
+	    <p>İçerik <a rel="license" title="Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International" href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a>, kaynak kodları <a title="Massachusetts Institute of Technology License" href="https://github.com/mertskaplan/turkiyede-gunluk-covid-19-grafigi/blob/main/LICENSE" target="_blank">MIT</a> lisansı altındadır.</p>
 	</div>
 </body>
 </html>
