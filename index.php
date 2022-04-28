@@ -146,11 +146,11 @@ for ($x = 0; isset($iv[$x]); $x++) {
     if (!empty($iv[$x]['toplam_asi']) && !empty($iv[$x - 1]['toplam_asi'])) {
         $iv[$x]['gunluk_vaka_degisim_orani'] = number_format($iv[$x]['gunluk_vaka'] / $iv[$x - 1]['gunluk_vaka'], 2);   // 35
 		
-		$iv[$x]['gunluk_1_doz_asi'] = (int)$iv[$x]['1_doz_asi'] - $iv[$x - 1]['1_doz_asi'];				                // 36
-		$iv[$x]['gunluk_2_doz_asi'] = (int)$iv[$x]['2_doz_asi'] - $iv[$x - 1]['2_doz_asi'];				                // 37
-		$iv[$x]['gunluk_3_doz_asi'] = (int)$iv[$x]['3_doz_asi'] - $iv[$x - 1]['3_doz_asi'];				                // 38
+		$iv[$x]['gunluk_1_doz_asi'] = (int)$iv[$x]['1_doz_asi'] - $iv[$x - 1]['1_doz_asi'];                             // 36
+		$iv[$x]['gunluk_2_doz_asi'] = (int)$iv[$x]['2_doz_asi'] - $iv[$x - 1]['2_doz_asi'];                             // 37
+		$iv[$x]['gunluk_3_doz_asi'] = (int)$iv[$x]['3_doz_asi'] - $iv[$x - 1]['3_doz_asi'];                             // 38
 		
-		$iv[$x]['gunluk_asi'] = (int)$iv[$x]['toplam_asi'] - $iv[$x - 1]['toplam_asi'];					                // 39
+		$iv[$x]['gunluk_asi'] = (int)$iv[$x]['toplam_asi'] - $iv[$x - 1]['toplam_asi'];                                 // 39
     } else {
         $iv[$x]['gunluk_vaka_degisim_orani'] = 1;
 		$iv[$x]['gunluk_asi'] = $iv[$x]['gunluk_1_doz_asi'] = $iv[$x]['gunluk_2_doz_asi'] = $iv[$x]['gunluk_3_doz_asi'] = null;
